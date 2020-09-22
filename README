@@ -1,0 +1,141 @@
+
+Cuidado con las flechas de extincion. Mirar virronen en el programa de J-PLUS.
+##############################################################################
+How intall astroconda en Python===>>>
+
+    Install the latest 64-bit, Python 2.7 version1 of Anaconda from https://www.continuum.io/downloads (unless you already have a recent version installed). If you prefer, you may use Miniconda (omitting ~1GB of packages, out of ~7GB total).
+
+    Make sure Anaconda is activated in your bash (or zsh)2 session:
+
+    source ~/anaconda/bin/activate
+
+    (or whichever path it was installed under).
+
+    Configure conda to look for packages in the AstroConda "channel" at STScI:
+
+    conda config --add channels http://ssb.stsci.edu/astroconda
+
+    This is a one-time step, affecting current and future Anaconda installations belonging to the same user on the same machine.
+
+    Install our packages into a new conda environment (with a name of your choosing after "-n", such as "astroconda"):
+
+    conda create -n astroconda python=2.7 iraf-all pyraf-all stsci gemini
+
+    If you add anaconda to the end of this command, you will also be able to access all the default packages distributed with anaconda when working in the "astroconda" environment (this is not 100% guaranteed to work in future, if there are package version conflicts, but we have not encountered any to date and you can always try and see whether the installer is happy). If you want only the minimum needed to run Gemini IRAF, you may replace the last four arguments with iraf.gemini iraf-x11 pyraf ds9, saving ~2GB.
+
+    Whenever you would like to make the packages available in any given terminal session, type:
+
+    source activate astroconda
+
+    (or whatever name you gave the environment).
+
+    If you answered "no" when the Anaconda installer asked to modify your login PATH at step 1, you might need to provide the full path to the "activate" script (as for step 2). You may add the above line to the end of your .bashrc if you want, but note that this can add a few seconds to your login time, will override any other python or IRAF installations in your user environment and will display a traceback if the new conda environment is ever removed.
+
+Users of the new GMOS-N Hamamatsu CCDs can access the temporary Gemini IRAF 1.14 commissioning release in Astroconda PyRAF by following the instructions in its "gemini_readme.txt" file, to override the included version (as for Ureka).
+
+For further information, see https://astroconda.readthedocs.io. Please submit any questions on using Gemini's software with Astroconda via the Gemini helpdesk (in the Gemini IRAF category). Support resources for more general questions (including Google groups for discussing Anaconda itself) are listed at http://astroconda.readthedocs.io/en/latest/resources.html.
+
+Notes: 
+############################################################################
+############################################################################
+ONLY USING THE COLOR rSDSS - Halpha ########################################
+
+Dolowander Ha emmiter from dr1 JPLUS =>
+
+SELECT * FROM jplus.MagABDualObj WHERE MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::J0660] >= 1 AND MAG_AUTO[jplus::uJAVA] <= 21.6 AND MAG_AUTO[jplus::J0378] <= 21.5 AND MAG_AUTO[jplus::J0395] < 21.4 AND MAG_AUTO[jplus::J0410] <= 21.5 AND MAG_AUTO[jplus::J0430] < 21.4 AND MAG_AUTO[jplus::gSDSS] <= 22.2 AND MAG_AUTO[jplus::J0515] <= 21.4 AND MAG_AUTO[jplus::rSDSS] <= 21.9 AND MAG_AUTO[jplus::J0660] <= 21.3 AND MAG_AUTO[jplus::iSDSS] <= 20.8 AND MAG_AUTO[jplus::J0861] <= 20.8 AND MAG_AUTO[jplus::zSDSS] <= 20.5
+
+____________
+rSDSS < 20
+ERR <=0.2
+FLASG normal <= 3.0
+MASK FLASG = 0.0
+
+##########################################
+The better criteria to get Halpha emitter form JPLUS DR1=>
+
+SELECT * FROM jplus.MagABDualObj WHERE MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::J0660] >= 1 AND MAG_AUTO[jplus::rSDSS] < 20.0 AND MAG_ERR_AUTO[jplus::rSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::gSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::iSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::zSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::uJAVA] <= 0.2 AND MAG_ERR_AUTO[jplus::J0378] <= 0.2 AND MAG_ERR_AUTO[jplus::J0395] <= 0.2 AND MAG_ERR_AUTO[jplus::J0410] <= 0.2 AND MAG_ERR_AUTO[jplus::J0430] <= 0.2 AND MAG_ERR_AUTO[jplus::J0515] <= 0.2 AND MAG_ERR_AUTO[jplus::J0660] <= 0.2 AND MAG_ERR_AUTO[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0
+__________________________________________________________________________________________
+SELECT * FROM jplus.MagABDualObj WHERE MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660] >= 1 AND MAG_ISO_GAUSS[jplus::rSDSS] < 20.0 AND MAG_ERR_ISO_GAUSS[jplus::rSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::gSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::iSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::zSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::uJAVA] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0378] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0395] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0410] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0430] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0515] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0660] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0
+
+#########################################################
+For PNe in dr1
+
+AUTO = >
+
+SELECT * FROM jplus.MagABDualObj WHERE  MAG_AUTO[jplus::J0515] - MAG_AUTO[jplus::J0660] >= 2.7*(MAG_AUTO[jplus::J0515] - MAG_AUTO[jplus::J0861]) + 2.15 AND MAG_AUTO[jplus::J0515] - MAG_AUTO[jplus::J0660] >= 0.22 AND MAG_AUTO[jplus::zSDSS] - MAG_AUTO[jplus::J0660] >= 0.35*(MAG_AUTO[jplus::zSDSS] - MAG_AUTO[jplus::gSDSS]) + 0.82 AND MAG_AUTO[jplus::zSDSS] - MAG_AUTO[jplus::J0660] >= -0.8*(MAG_AUTO[jplus::zSDSS] - MAG_AUTO[jplus::gSDSS]) + 1.8 AND MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::J0660] >= 0.43*(MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::iSDSS]) + 0.65 AND MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::J0660] <= -6.8*(MAG_AUTO[jplus::rSDSS] - MAG_AUTO[jplus::iSDSS]) - 1.3 AND MAG_AUTO[jplus::J0410] - MAG_AUTO[jplus::J0660] >= 8.0*(MAG_AUTO[jplus::gSDSS] - MAG_AUTO[jplus::iSDSS]) + 4.5 AND MAG_AUTO[jplus::J0410] - MAG_AUTO[jplus::J0660] >= 0.8*(MAG_AUTO[jplus::gSDSS] - MAG_AUTO[jplus::iSDSS]) + 0.55 AND MAG_AUTO[jplus::gSDSS] - MAG_AUTO[jplus::J0515] <= -0.12*(MAG_AUTO[jplus::J0660] - MAG_AUTO[jplus::rSDSS]) - 0.01 AND MAG_AUTO[jplus::gSDSS] - MAG_AUTO[jplus::J0515] <= -1.1*(MAG_AUTO[jplus::J0660] - MAG_AUTO[jplus::rSDSS]) + 4.5 AND MAG_AUTO[jplus::rSDSS] < 20.0 AND MAG_ERR_AUTO[jplus::rSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::gSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::iSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::zSDSS] <= 0.2 AND MAG_ERR_AUTO[jplus::uJAVA] <= 0.2 AND MAG_ERR_AUTO[jplus::J0378] <= 0.2 AND MAG_ERR_AUTO[jplus::J0395] <= 0.2 AND MAG_ERR_AUTO[jplus::J0410] <= 0.2 AND MAG_ERR_AUTO[jplus::J0430] <= 0.2 AND MAG_ERR_AUTO[jplus::J0515] <= 0.2 AND MAG_ERR_AUTO[jplus::J0660] <= 0.2 AND MAG_ERR_AUTO[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0
+
+ISO_GAUSS =>
+SELECT * FROM jplus.MagABDualObj WHERE  (MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660]) >= 2.7*(MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0861]) + 2.15 AND (MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.22 AND (MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.35*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) + 0.82 AND (MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= -0.8*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) + 1.8 AND (MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.43*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 0.65 AND (MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660]) <= -6.8*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) - 1.3 AND (MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660]) >= 8.0*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 4.5 AND (MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.8*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 0.55 AND (MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515]) <= 0.12*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 0.01 AND (MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515]) <= -1.1*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 1.07 AND MAG_ISO_GAUSS[jplus::rSDSS] < 20.0 AND MAG_ERR_ISO_GAUSS[jplus::rSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::gSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::iSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::zSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::uJAVA] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0378] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0395] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0410] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0430] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0515] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0660] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0
+
+or
+
+ SELECT * FROM jplus.MagABDualObj WHERE (MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660]) >= 2.7*(MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0861]) + 2.15 AND (MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.22 AND (MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.35*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) + 0.82 AND (MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= -0.8*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) + 1.8 AND (MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.43*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 0.65 AND (MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660]) <= -6.8*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) - 1.3 AND (MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660]) >= 8.0*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 4.5 AND (MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660]) >= 0.8*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 0.55 AND (MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515]) <= 0.12*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 0.01 AND (MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515]) <= -1.1*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 1.07 AND MAG_ISO_GAUSS[jplus::rSDSS] < 20.0 AND MAG_ERR_ISO_GAUSS[jplus::rSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::gSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::iSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::zSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::uJAVA] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0378] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0395] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0410] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0430] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0515] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0660] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0861] <= 0.2 AND ARRAY_MAX_INT(MASK_FLAGS) = 0 AND ARRAY_MAX_INT(FLAGS) <= 3.0
+
+Simbiotics=>
+ISO_GAUSS:
+
+SELECT * FROM jplus.MagABDualObj WHERE  MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660] <= 5.5*(MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0861]) - 6.45 AND MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0660] >= 0.98*(MAG_ISO_GAUSS[jplus::J0515] - MAG_ISO_GAUSS[jplus::J0861]) - 0.16 AND MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660] <= -1.96*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) - 3.15 AND MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::J0660] >= 0.2*(MAG_ISO_GAUSS[jplus::zSDSS] - MAG_ISO_GAUSS[jplus::gSDSS]) + 0.44 AND MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660]  >= -400*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 30.4 AND MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::J0660] >= 0.39*(MAG_ISO_GAUSS[jplus::rSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 0.73 AND (MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660]) >= -5.2*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) + 10.60 AND MAG_ISO_GAUSS[jplus::J0410] - MAG_ISO_GAUSS[jplus::J0660] >= 1.9*(MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::iSDSS]) - 1.43 AND MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515] >= -0.19*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 0.09 AND MAG_ISO_GAUSS[jplus::gSDSS] - MAG_ISO_GAUSS[jplus::J0515] <= -2.9*(MAG_ISO_GAUSS[jplus::J0660] - MAG_ISO_GAUSS[jplus::rSDSS]) - 2.2 AND MAG_ISO_GAUSS[jplus::rSDSS] < 20.0 AND MAG_ERR_ISO_GAUSS[jplus::rSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::gSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::iSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::zSDSS] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::uJAVA] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0378] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0395] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0410] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0430] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0515] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0660] <= 0.2 AND MAG_ERR_ISO_GAUSS[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0 
+
+Coordinate of J-PLUS PN candidate=>
+09 50 20.919  +31 29 11.016'
+Vmag = 17.6
+
+PN=>
+Apertura MAG_APER_6_0=
+
+SELECT * FROM jplus.MagABDualObj WHERE  (MAG_APER_6_0[jplus::J0515] - MAG_APER_6_0[jplus::J0660]) >= 2.7*(MAG_APER_6_0[jplus::J0515] - MAG_APER_6_0[jplus::J0861]) + 2.15 AND (MAG_APER_6_0[jplus::J0515] - MAG_APER_6_0[jplus::J0660]) >= 0.22 AND (MAG_APER_6_0[jplus::zSDSS] - MAG_APER_6_0[jplus::J0660]) >= 0.35*(MAG_APER_6_0[jplus::zSDSS] - MAG_APER_6_0[jplus::gSDSS]) + 0.82 AND (MAG_APER_6_0[jplus::zSDSS] - MAG_APER_6_0[jplus::J0660]) >= -0.8*(MAG_APER_6_0[jplus::zSDSS] - MAG_APER_6_0[jplus::gSDSS]) + 1.8 AND (MAG_APER_6_0[jplus::rSDSS] - MAG_APER_6_0[jplus::J0660]) >= 0.43*(MAG_APER_6_0[jplus::rSDSS] - MAG_APER_6_0[jplus::iSDSS]) + 0.65 AND (MAG_APER_6_0[jplus::rSDSS] - MAG_APER_6_0[jplus::J0660]) <= -6.8*(MAG_APER_6_0[jplus::rSDSS] - MAG_APER_6_0[jplus::iSDSS]) - 1.3 AND (MAG_APER_6_0[jplus::J0410] - MAG_APER_6_0[jplus::J0660]) >= 8.0*(MAG_APER_6_0[jplus::gSDSS] - MAG_APER_6_0[jplus::iSDSS]) + 4.5 AND (MAG_APER_6_0[jplus::J0410] - MAG_APER_6_0[jplus::J0660]) >= 0.8*(MAG_APER_6_0[jplus::gSDSS] - MAG_APER_6_0[jplus::iSDSS]) + 0.55 AND (MAG_APER_6_0[jplus::gSDSS] - MAG_APER_6_0[jplus::J0515]) <= 0.12*(MAG_APER_6_0[jplus::J0660] - MAG_APER_6_0[jplus::rSDSS]) - 0.01 AND (MAG_APER_6_0[jplus::gSDSS] - MAG_APER_6_0[jplus::J0515]) <= -1.1*(MAG_APER_6_0[jplus::J0660] - MAG_APER_6_0[jplus::rSDSS]) - 1.07 AND MAG_APER_6_0[jplus::rSDSS] < 20.0 AND MAG_ERR_APER_6_0[jplus::rSDSS] <= 0.2 AND MAG_ERR_APER_6_0[jplus::gSDSS] <= 0.2 AND MAG_ERR_APER_6_0[jplus::iSDSS] <= 0.2 AND MAG_ERR_APER_6_0[jplus::zSDSS] <= 0.2 AND MAG_ERR_APER_6_0[jplus::uJAVA] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0378] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0395] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0410] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0430] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0515] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0660] <= 0.2 AND MAG_ERR_APER_6_0[jplus::J0861] <= 0.2 AND FLAGS[jplus::rSDSS] <= 3.0 AND FLAGS[jplus::gSDSS] <= 3.0 AND FLAGS[jplus::iSDSS] <= 3.0 AND FLAGS[jplus::zSDSS] <= 3.0 AND FLAGS[jplus::uJAVA] <= 3.0 AND FLAGS[jplus::J0378] <= 3.0 AND FLAGS[jplus::J0395] <= 3.0 AND FLAGS[jplus::J0410] <= 3.0 AND FLAGS[jplus::J0430] <= 3.0 AND FLAGS[jplus::J0515] <= 3.0 AND FLAGS[jplus::J0660] <= 3.0 AND FLAGS[jplus::J0861] <= 3.0 AND MASK_FLAGS[jplus::rSDSS] = 0.0 AND MASK_FLAGS[jplus::gSDSS] = 0.0 AND MASK_FLAGS[jplus::iSDSS] = 0.0 AND MASK_FLAGS[jplus::zSDSS] = 0.0 AND MASK_FLAGS[jplus::uJAVA] = 0.0 AND MASK_FLAGS[jplus::J0378] = 0.0 AND MASK_FLAGS[jplus::J0395] = 0.0 AND MASK_FLAGS[jplus::J0410] = 0.0 AND MASK_FLAGS[jplus::J0430] = 0.0 AND MASK_FLAGS[jplus::J0515] = 0.0 AND MASK_FLAGS[jplus::J0660] = 0.0 AND MASK_FLAGS[jplus::J0861] = 0.0
+
+
+Quitar el color j0660-r
+____________________________
+Coord de H II galaxy: 12 19 09.840 +03 51 23.34
+
+
+###################################
+TAP (Topcat) Query=>
+http://datalab.noao.edu/tap
+
+SELECT * FROM stripe82.splus_dr1 WHERE photoflag=0 AND eujava_auto <= 0.2 AND ef378_auto <= 0.2 AND 
+ef395_auto <= 0.2 AND ef410_auto <= 0.2 AND ef430_auto <= 0.2 AND eg_auto <= 0.2 AND ef515_auto <= 0.2 
+AND er_auto <= 0.2 AND ef660_auto <= 0.2 AND ei_auto <= 0.2 AND ef861_auto <= 0.2 AND ez_auto <= 0.2
+AND r_auto <= 19 AND (r_auto - f660_auto) >= 1.0
+
+#################################################################################
+Sobre LDA:
+
+Like @amoeba, I don't understand your difference between Q1 and Q2: in any case, LDA obtains at most k−1 dimensions. For k=2 that's one dimension, for k=8 it would be 7. And of course, if the input space has lower dimensionality that that's the limiting factor.
+
+One idea/heuristic behind LDA is that separating classes is easy if they are all spheres of the same size: all you then need is distance to the class means. Alternatively, you can say that the connection between class means are normal vectors for suitable separation planes.
+In that narrative, you can look at LDA as a projection that in the first place does singular value decomposition (i.e. something very similar to PCA) of the pooled covariance matrix in order to get a space with such spherical classes. Let's call this our primary score space.
+
+Depending on the customs of your field, this is either the PCA score space of the pooled covariance matrix = the PCA score space of the data matrix centered to the respective class means, or the PCA score space squeezed according to the eigenvalues/SVD diagonal matrix (some fields by default put this scaling for PCA into the loadings, others [mine] into the scores).
+
+The primary score space still has the dimensionality corresponding to the rank of the pooled covariance matrix/data matrix centered to the respective class means. Pooled covariance matrix in this space is a unit sphere, i.e. each class is considered as a unit-sphere centered at the respective class mean, the means also projected into score space.
+
+(At this point, we could derive other classification algorithms that use the SVD projection as heuristic but don't exploit/rely on the assumed unit-sized spherical shape of the classes.)
+
+Now, as we have unit-spherical class shapes, the only thing remaining to care about are the class means. I.e., k points. Even if our primary score space has higher dimensionality, the k points will form a k−1 dimensional shape (simplex). Thus without loss of anything, we can further rotate our primary score space so that our k−1-simplex of class means lies in the first k−1 dimensions.
+For the postulted spherical classes, all further dimensions cannot not help with the distinction: the classes have exactly the same size and position in these further dimensions. Thus, we throw them away.
+
+(Again, you may derive another classifier that uses the first two projection steps but then keeps [some of] those further dimensions as the classes in practice may not be spherical.)
+
+One classifer to look into when comparing LDA and PCA is SIMCA which can be seen as a one-class classifier analogous to LDA.
+
+In SIMCA, you'll find the notion of in-model space and out-of-model space: in in-model space you detect changes of the same type of the usual variation within your class (but possibly of unusual magnitude). In out-of-model space you detect variation of a type that does not usually occur within any of the classes.
+
+For our description of LDA, the k−1 dimensions we keep would be the in-model space, whereas the remaining dimensions are the out-of-model space. Interpretation will be slightly different compared to SIMCA, but you should have a start for your thoughts with this.
+
+
+
+Accuracy and Precision:
+
+
+Accuracy refers to the closeness of a measured value to a standard or known value. For example, if in lab you obtain a weight measurement of 3.2 kg for a given substance, but the actual or known weight is 10 kg, then your measurement is not accurate. In this case, your measurement is not close to the known value.
+
+Precision refers to the closeness of two or more measurements to each other. Using the example above, if you weigh a given substance five times, and get 3.2 kg each time, then your measurement is very precise. Precision is independent of accuracy. You can be very precise but inaccurate, as described above. You can also be accurate but imprecise.
+
+For example, if on average, your measurements for a given substance are close to the known value, but the measurements are far from each other, then you have accuracy without precision.
+
+A good analogy for understanding accuracy and precision is to imagine a basketball player shooting baskets. If the player shoots with accuracy, his aim will always take the ball close to or into the basket. If the player shoots with precision, his aim will always take the ball to the same location which may or may not be close to the basket. A good player will be both accurate and precise by shooting the ball the same way each time and each time making it in the basket.
+
+
