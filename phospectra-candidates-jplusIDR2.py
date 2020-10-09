@@ -13,6 +13,7 @@ import argparse
 import os
 from colour import Color
 
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 wl = [3485, 3785, 3950, 4100, 4300, 4803, 5150, 6250, 6600, 7660, 8610, 9110]
 color = ["#CC00FF", "#9900FF", "#6600FF", "#0000FF", "#009999", "#006600", "#DD8000", "#FF0000", "#CC0066", "#990033", "#660033", "#330034"]
@@ -40,23 +41,22 @@ args = parser.parse_args()
 file_ = args.source + ".tab"
 
 data = Table.read(file_, format="ascii.tab")
-
-n = data["RA"]
+n = len(data)
 
 Number = []
 
-mag_auto  = [[] for _ in range(len(n))]
-mag_MAG_APER_6_0 = [[] for _ in range(len(n))]
-mag_aper = [[] for _ in range(len(n))]
-mag_auto_WORSTPSF = [[] for _ in range(len(n))]
+mag_auto  = [[] for _ in range(n)]
+mag_MAG_APER_6_0 = [[] for _ in range(n)]
+mag_aper = [[] for _ in range(n)]
+mag_auto_WORSTPSF = [[] for _ in range(n)]
 
 #Error
-mag_auto_err  = [[] for _ in range(len(n))]
-mag_MAG_APER_6_0_err  = [[] for _ in range(len(n))]
+mag_auto_err  = [[] for _ in range(n)]
+mag_MAG_APER_6_0_err  = [[] for _ in range(n)]
 
-print(len(n))
+print(n)
 
-for i in range(len(n)):
+for i in range(n):
     mag_auto[i].append(data["uJAVA_auto"][i])
     mag_auto[i].append(data["J0378_auto"][i])
     mag_auto[i].append(data["J0395_auto"][i])
@@ -69,7 +69,7 @@ for i in range(len(n)):
     mag_auto[i].append(data["iSDSS_auto"][i]) 
     mag_auto[i].append(data["J0861_auto"][i]) 
     mag_auto[i].append(data["zSDSS_auto"][i])
-    #Isso
+    #Aper 6
     mag_MAG_APER_6_0[i].append(data["uJAVA_MAG_APER_6_0"][i])
     mag_MAG_APER_6_0[i].append(data["J0378_MAG_APER_6_0"][i])
     mag_MAG_APER_6_0[i].append(data["J0395_MAG_APER_6_0"][i])
@@ -82,26 +82,24 @@ for i in range(len(n)):
     mag_MAG_APER_6_0[i].append(data["iSDSS_MAG_APER_6_0"][i]) 
     mag_MAG_APER_6_0[i].append(data["J0861_MAG_APER_6_0"][i]) 
     mag_MAG_APER_6_0[i].append(data["zSDSS_MAG_APER_6_0"][i])
-   
     #ERRO AUTO
-    mag_auto_err[i].append(float(data["uJAVA_auto_err"][i]))
-    mag_auto_err[i].append(float(data["J0378_auto_err"][i]))
-    mag_auto_err[i].append(float(data["J0395_auto_err"][i]))
-    mag_auto_err[i].append(float(data["J0410_auto_err"][i]))
-    mag_auto_err[i].append(float(data["J0430_auto_err"][i]))
-    mag_auto_err[i].append(float(data["gSDSS_auto_err"][i]))
-    mag_auto_err[i].append(float(data["J0515_auto_err"][i])) 
-    mag_auto_err[i].append(float(data["rSDSS_auto_err"][i])) 
-    mag_auto_err[i].append(float(data["J0660_auto_err"][i]))
-    mag_auto_err[i].append(float(data["iSDSS_auto_err"][i]))
+    mag_auto_err[i].append(data["uJAVA_auto_err"][i])
+    mag_auto_err[i].append(data["J0378_auto_err"][i])
+    mag_auto_err[i].append(data["J0395_auto_err"][i])
+    mag_auto_err[i].append(data["J0410_auto_err"][i])
+    mag_auto_err[i].append(data["J0430_auto_err"][i])
+    mag_auto_err[i].append(data["gSDSS_auto_err"][i])
+    mag_auto_err[i].append(data["J0515_auto_err"][i]) 
+    mag_auto_err[i].append(data["rSDSS_auto_err"][i]) 
+    mag_auto_err[i].append(data["J0660_auto_err"][i])
+    mag_auto_err[i].append(data["iSDSS_auto_err"][i])
     try:
-        mag_auto_err[i].append(float(data["J0861_auto_err"][i]))
+        mag_auto_err[i].append(data["J0861_auto_err"][i])
     except ValueError:
         mag_auto_err[i].append(float(0.0))
-    mag_auto_err[i].append(float(data["zSDSS_auto_err"][i]))
+    mag_auto_err[i].append(data["zSDSS_auto_err"][i])
 
-    print(mag_auto_err[1])
-    #ERRO ISO
+    #ERROR Aper 6
     mag_MAG_APER_6_0_err[i].append(data["uJAVA_MAG_APER_6_0_err"][i])
     mag_MAG_APER_6_0_err[i].append(data["J0378_MAG_APER_6_0_err"][i])
     mag_MAG_APER_6_0_err[i].append(data["J0395_MAG_APER_6_0_err"][i])
@@ -120,11 +118,10 @@ for i in range(len(n)):
         'weight': 'normal',
         'size': 16,
         }
-
     #########################################
     # Aper 6                              ###
     #########################################
-    plotfile = "photospectrum_"+str(data["Number"][i])+"_auto.pdf"
+    plotfile = "photospectrum_"+str(data["Tile"][i])+"-"+str(data["Number"][i])+"-{}_auto.pdf".format(file_.split('.ta')[0])
     fig = plt.figure(figsize=(15.5, 9.5))
     ax = fig.add_subplot(1,1,1)
     plt.tick_params(axis='x', labelsize=42) 
@@ -138,10 +135,14 @@ for i in range(len(n)):
     # Mask to no take the values 99.0
     mask_au = [mag_auto[i][m] != 99.0 for m in range(len(mag_auto[0]))]
 
-    ax.plot(wl[mask_au], mag_auto[i][mask_au], '-k', alpha=0.2)#, label='Auto')
-    for wl1, mag, mag_err, colors, marker_ in zip(wl[mask_au], mag_auto[i][mask_au], mag_auto_err[i], color, marker):
+    ax.plot(np.array(wl)[mask_au], np.array(mag_auto[i])[mask_au], '-k', alpha=0.2)#, label='Auto')
+    for wl1, mag, mag_err, colors, marker_ in zip(np.array(wl)[mask_au], np.array(mag_auto[i])[mask_au], np.array(mag_auto_err[i]), color, marker):
         ax.scatter(wl1, mag, color = colors, marker=marker_, s=600, zorder=10)
-        ax.errorbar(wl1, mag, yerr=mag_err, marker='.', fmt='.', color=colors, ecolor=colors, elinewidth=5.9, markeredgewidth=5.2, capsize=20)
+        try:
+            ax.errorbar(wl1, mag, yerr=mag_err, marker='.', fmt='.', color=colors, ecolor=colors, elinewidth=5.9, markeredgewidth=5.2, capsize=20)
+        except ValueError:
+            continue
+     
     #plt.subplots_adjust(bottom=0.19)
     # plt.text(0.06, 0.86, label_obj[i],
     #     transform=ax.transAxes, fontsize=48,  fontdict=font)
@@ -153,14 +154,16 @@ for i in range(len(n)):
     plt.gca().invert_yaxis()
     #save_path = '../../../../../Dropbox/JPAS/paper-phot/'
     # save_path = '../../../../../Dropbox/paper-pne/Fig/'
-    # file_save = os.path.join(save_path, plotfile)
-    plt.savefig(plotfile)
+    save_path = 'figs-pca/'
+    #save_path = 'Jspectra-missingPN/'
+    file_save = os.path.join(save_path, plotfile)
+    plt.savefig(file_save)
     plt.clf()
 
     #########################################
     # Auto                               ####
     #########################################
-    plotfile = "photospectrum_"+str(data["Number"][i])+"_MAG_APER_6_0.pdf"
+    plotfile1 = "photospectrum_"+str(data["Tile"][i])+"-"+str(data["Number"][i])+"-{}_MAG_APER_6_0.pdf".format(file_.split('.ta')[0])
     fig = plt.figure(figsize=(15.5, 9.5))
     ax = fig.add_subplot(1,1,1)
     plt.tick_params(axis='x', labelsize=42) 
@@ -173,11 +176,14 @@ for i in range(len(n)):
 
     #Mask to no take the values 99.0
     mask_ap = [mag_MAG_APER_6_0[i][m] != 99.0 for m in range(len(mag_MAG_APER_6_0[0]))]
-
-    ax.plot(wl[mask_ap], mag_MAG_APER_6_0[i][mask_ap], '-k', alpha=0.2)#, label='Auto')
-    for wl1, mag, mag_err, colors, marker_ in zip(wl[mask_ap], mag_MAG_APER_6_0[i][mask_ap], mag_MAG_APER_6_0_err[i], color, marker):
+    
+    ax.plot(np.array(wl)[mask_ap], np.array(mag_MAG_APER_6_0[i])[mask_ap], '-k', alpha=0.2)#, label='Auto')
+    for wl1, mag, mag_err, colors, marker_ in zip(np.array(wl)[mask_ap], np.array(mag_MAG_APER_6_0[i])[mask_ap], np.array(mag_MAG_APER_6_0_err[i]), color, marker):
         ax.scatter(wl1, mag, color = colors, marker=marker_, s=600, zorder=10)
-        ax.errorbar(wl1, mag, yerr=mag_err, marker='.', fmt='.', color=colors, ecolor=colors, elinewidth=5.9, markeredgewidth=5.2, capsize=20)
+        try:
+            ax.errorbar(wl1, mag, yerr=mag_err, marker='.', fmt='.', color=colors, ecolor=colors, elinewidth=5.9, markeredgewidth=5.2, capsize=20)
+        except ValueError:
+            continue
     #plt.subplots_adjust(bottom=0.19)
     # plt.text(0.06, 0.86, label_obj[i],
     #     transform=ax.transAxes, fontsize=48,  fontdict=font)
@@ -188,7 +194,7 @@ for i in range(len(n)):
     plt.tight_layout()
     plt.gca().invert_yaxis()
     #save_path = '../../../../../Dropbox/JPAS/paper-phot/'
-    # save_path = '../../../../../Dropbox/paper-pne/Fig/'
-    # file_save = os.path.join(save_path, plotfile)
-    plt.savefig(plotfile)
+    #save_path = 'figs-pca/'
+    file_save = os.path.join(save_path, plotfile1)
+    plt.savefig(file_save)
     plt.clf()

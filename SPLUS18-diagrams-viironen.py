@@ -297,24 +297,24 @@ for file_name1 in file_list1:
         plot_mag_MS("F625_R", "F660", "F766_I")
 
 #dt = ascii.read("MS-G-spectros/comet_galaxies.txt")
-dt = ascii.read("SPLUS-DR1/haemiiter-08/emission-objects-splusdr1-rhalpha.dat")
+# dt = ascii.read("SPLUS-DR1/haemiiter-08/emission-objects-splusdr1-rhalpha.dat")
 
-mm = dt["FIELD"] != "STRIPE82-0003" 
-mm1 = dt["FIELD"] != "STRIPE82-0046"
-mmm = dt["FIELD"] != "STRIPE82-0159"
-t_mm = mm & mm1 & mmm
+# mm = dt["FIELD"] != "STRIPE82-0003" 
+# mm1 = dt["FIELD"] != "STRIPE82-0046"
+# mmm = dt["FIELD"] != "STRIPE82-0159"
+# t_mm = mm & mm1 & mmm
 
-mm2 = dt["FIELD"] == "STRIPE82-0003" 
-mm3 = dt["FIELD"] == "STRIPE82-0046" 
+# mm2 = dt["FIELD"] == "STRIPE82-0003" 
+# mm3 = dt["FIELD"] == "STRIPE82-0046" 
 
-xxx = dt["r_auto"][t_mm] -  dt["i_auto"][t_mm]
-yyy = dt["r_auto"][t_mm] -  dt["F660_auto"][t_mm]
+# xxx = dt["r_auto"][t_mm] -  dt["i_auto"][t_mm]
+# yyy = dt["r_auto"][t_mm] -  dt["F660_auto"][t_mm]
 
-xxx1 = dt["r_auto"][mm2] -  dt["i_auto"][mm2]
-yyy1 = dt["r_auto"][mm2] -  dt["F660_auto"][mm2]
+# xxx1 = dt["r_auto"][mm2] -  dt["i_auto"][mm2]
+# yyy1 = dt["r_auto"][mm2] -  dt["F660_auto"][mm2]
 
-xxx2 = dt["r_auto"][mm3] -  dt["i_auto"][mm3]
-yyy2 = dt["r_auto"][mm3] -  dt["F660_auto"][mm3]
+# xxx2 = dt["r_auto"][mm3] -  dt["i_auto"][mm3]
+# yyy2 = dt["r_auto"][mm3] -  dt["F660_auto"][mm3]
 
 ##############################################################################
 #plots
@@ -329,17 +329,17 @@ ax1.set_ylim(-1.3, 2.8)
 plt.tick_params(axis='x', labelsize=25) 
 plt.tick_params(axis='y', labelsize=25)
 plt.xlabel(r'$r - i$', fontsize= 25)
-plt.ylabel(r'$r - J0660$', fontsize= 25)
+plt.ylabel(r'$r - F660$', fontsize= 25)
 #plt.plot( 'x', 'y', data=df, linestyle='', marker='o')
-ax1.scatter(xxx1, yyy1, c=sns.xkcd_rgb['bright blue'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1000.0, label='Halpha emitter')
+#ax1.scatter(xxx1, yyy1, c=sns.xkcd_rgb['bright blue'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1000.0, label='Halpha emitter')
 bbox_props = dict(boxstyle="round", fc="w", ec="0.78", alpha=0.5, pad=0.1)
-ax1.annotate("0003.25366", (xxx1, yyy1), alpha=15, size=10.0,
-                   xytext=(-5, 2), textcoords='offset points', ha='right', va='bottom', c='b', bbox=bbox_props, zorder=100)
+#ax1.annotate("0003.25366", (xxx1, yyy1), alpha=15, size=10.0,
+                   #xytext=(-5, 2), textcoords='offset points', ha='right', va='bottom', c='b', bbox=bbox_props, zorder=100)
 
-ax1.scatter(xxx2, yyy2, c=sns.xkcd_rgb['bright blue'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1001.0)
-ax1.annotate("0046.16098", (xxx2, yyy2), alpha=15, size=10.0,
-                   xytext=(-7, -17), textcoords='offset points', ha='right', va='bottom', c='b', bbox=bbox_props, zorder=100)
-ax1.scatter(xxx, yyy, c=sns.xkcd_rgb['bright green'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1000.0, label='Halpha emitter')
+#ax1.scatter(xxx2, yyy2, c=sns.xkcd_rgb['bright blue'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1001.0)
+#ax1.annotate("0046.16098", (xxx2, yyy2), alpha=15, size=10.0,
+                   #xytext=(-7, -17), textcoords='offset points', ha='right', va='bottom', c='b', bbox=bbox_props, zorder=100)
+#ax1.scatter(xxx, yyy, c=sns.xkcd_rgb['bright green'], alpha=0.9, s=300, cmap=plt.cm.hot, marker='*', edgecolor='black',  zorder=1000.0, label='Halpha emitter')
 ax1.scatter(y, x, c=z, s=50, alpha=0.5, edgecolor='')
 # ax1.scatter(x_color_vii_h4, y_color_vii_h4, c=sns.xkcd_rgb['yellow'], alpha=0.9, marker='*', s=490, edgecolor='black', zorder=150.0, label='J-PLUS H4-1')
 # ax1.errorbar(x_color_vii_h4, y_color_vii_h4, xerr=err_Val_h4x, yerr=err_Val_h4y, marker='.', fmt='k.', elinewidth=1.9, markeredgewidth=1.8, capsize=9)#, elinewidth=1.4, markeredgewidth=1.4, markersize=14,)
@@ -400,10 +400,10 @@ left, bottom, width, height = [0.215, 0.57, 0.23, 0.23]
 ax11 = fig.add_axes([left, bottom, width, height])
 ax11.set_xlim(xmin=-3.7,xmax=3.7)
 ax11.set_ylim(ymin=-2.4,ymax=2.8)
-ax11.scatter(B1[20], A1[20], c=sns.xkcd_rgb['neon purple'], alpha=0.3, s=20, cmap=plt.cm.hot, marker='*', zorder=110, label='MS stars')
-ax11.scatter(BB1, AA1,  c=sns.xkcd_rgb['brown'], s=20, cmap=plt.cm.hot, marker='*', zorder=110, label='Giant stars')
+ax11.scatter(B1[20], A1[20], c=sns.xkcd_rgb['neon purple'], alpha=0.9, s=35, cmap=plt.cm.hot, marker='o', edgecolor='white', zorder=110, label='MS stars')
+ax11.scatter(BB1, AA1,  c=sns.xkcd_rgb['brown'], s=35, cmap=plt.cm.hot, marker='o', edgecolor='white', zorder=110, label='Giant stars')
 r_660, r_i = WS_splus("r_aper", "F660_aper", "i_aper")
-ax11.scatter(r_i, r_660, c=sns.xkcd_rgb['mint green'], alpha=0.8, s=20, cmap=plt.cm.hot, marker='*',  zorder=105, label='S-PLUS WDs')
+ax11.scatter(r_i, r_660, c=sns.xkcd_rgb['mint green'], s=35, cmap=plt.cm.hot, marker='o',  edgecolor='white', zorder=105, label='S-PLUS WDs')
 # ax11.text(0.08, 0.68, 'hPNe',
 #           transform=ax11.transAxes, fontsize=14)
 ax11.spines['top'].set_visible(False)
@@ -436,26 +436,25 @@ ax11.annotate("WD", xy=(-0.5, -0.48), xytext=(-2.5, -2.0), color='green', size=1
 # ax1.annotate("PNG 135.9+55.9", (d_768_jplus[1], d_644_jplus[1]), alpha=8, size=8,
 #                    xytext=(68, -10), textcoords='offset points', ha='right', va='bottom', color='green',)
 
-
 #Region Halpha Emitters
 x_new = np.linspace(-15.0, 1000, 200)
 #y =  0.108*x_new + 0.5 #no tan criterioso
-y = 0.22*x_new + 0.55
+y = 0.15*x_new + 0.53
 
 #Mask
 #mask = y >= result_y - 0.5
 ax1.plot(x_new, y, color='k', zorder=100, linestyle='-.')
+
 textbb = {"facecolor": "white", "alpha": 0.7, "edgecolor": "none"}
 textpars = {'ha': 'center', 'va': 'center', 'bbox': textbb, 'fontsize': 'small'}
-#plt.text(0.1, -4.1, 'r - Halpha = 0.11*(r - 1) + 0.5', rotation=9, rotation_mode='anchor', **textpars)
+plt.text(0.1, -4.9, 'r - F660 = 0.15*(r - i) + 0.53', rotation=12, rotation_mode='anchor', **textpars)
 
-ax11.plot(x_new, y, color='k', zorder=100, linestyle='-')
+ax11.plot(x_new, y, color='k', zorder=100, linestyle='-.')
 
 #Viironen
 # x_new4 = np.linspace(-10.0, 11.1, 200)
 # y_v =  0.25*x_new4 + 1.9
 # ax1.plot(x_new4, y_v, color='k', linestyle='--')
-
 
 # Region of the simbiotic stars
 result1 = findIntersection(-400.0, +30.4, 0.39, 0.73, 0.0)
@@ -505,6 +504,5 @@ ax1.legend(scatterpoints=1, ncol=2, fontsize=11.0, loc='lower left', **lgd_kws)
 pltfile = 'Fig-SPLUS-viironen.pdf'
 save_path = 'Plots-splus/'
 file_save = os.path.join(save_path, pltfile)
-plt.savefig(file_save)#, bbox_inches='tight')
+plt.savefig(file_save)#, bbox_inches='tight') 
 #plt.savefig('Fig1-JPLUS17-Viironen.pdf')
-plt.clf()
