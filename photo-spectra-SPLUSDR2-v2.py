@@ -14,6 +14,7 @@ import sys
 import argparse
 import os
 from colour import Color
+from pathlib import Path
 
 Number = []
 
@@ -38,7 +39,9 @@ parser.add_argument("--debug", action="store_true",
 args = parser.parse_args()
 file_ = args.source + ".dat"
 
-data = Table.read(file_, format="ascii")
+ROOT_PATH = Path("..")  # necessary since we are in the sub-folder
+
+data = Table.read(ROOT_PATH / file_, format="ascii")
 n = len(data)
 
 Number = []
